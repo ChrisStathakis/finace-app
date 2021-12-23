@@ -1,0 +1,352 @@
+{% extends 'dashboard.html' %}
+
+{% block extra_cs %}
+<style>
+    canvas{
+
+  width:400px !important;
+  height:400px !important;
+
+}
+</style>
+{% endblock %}
+
+{% block content %}
+    <div class="header pb-6 d-flex align-items-center" style="min-height: 500px;  background-size: cover; background-position: center top;">
+      <!-- Mask -->
+      <span class="mask bg-gradient-default opacity-8"></span>
+      <!-- Header container -->
+      <div class="container-fluid d-flex align-items-center">
+        <div class="row">
+          <div class="col-lg-7 col-md-10">
+            <h1 class="display-2 text-white">{{ ticker }}</h1>
+            <p class="text-white mt-0 mb-5">{{ ticker.group }}</p>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Page content -->
+    <div class="container-fluid mt--6">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">Last 50 days</div>
+                    <div class="card-body">
+                        <canvas id="myChart"></canvas>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-4 order-xl-2">
+                <div class="card card-profile">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-3 order-lg-2">
+                            <div class="card-profile-image">
+                                <h4>Probability of drop 5% in next day {{ drop_5_prop|floatformat:3 }}</h4>
+                                <h4>Probability of gain 5% in next day {{ gain_5_prop|floatformat:3 }}</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
+                        <div class="d-flex justify-content-between">
+                            <a href="{% url 'portfolio:update_ticker_api_view' object.id  'no' %}" class="btn btn-sm btn-info  mr-4 ">Refresh Data</a>
+                            <a href="{% url 'portfolio:update_ticker_api_view' object.id 'yes' %}" class="btn btn-sm btn-default float-right">Update Data from Api</a>
+                        </div>
+                    </div>
+                    <div class="card-body pt-0">
+                        <div class="row">
+                <div class="col">
+                  <div class="card-profile-stats d-flex justify-content-center">
+                    <div>
+                      <span id='price' class="heading">{{ object.price }}</span>
+                      <span class="description">Current Value</span>
+                    </div>
+                    <div>
+                      <span class="heading">{{ object.standard_deviation }}</span>
+                      <span class="description">STD</span>
+                    </div>
+                    <div>
+                      <span class="heading">{{ object.beta }}</span>
+                      <span class="description">Beta</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="text-center">
+                <h5 class="h3">
+                  {{ object }}<span class="font-weight-light">, {{ object.ticker }}</span>
+                </h5>
+                <div class="h5 font-weight-300">
+                  <i class="ni location_pin mr-2"></i>{{ object.group }} - {{ object.updated|timesince }}
+                    <i class="ni location_pin mr-2"></i>Sharp {{ object.sharp }}
+                </div>
+
+              </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="card-profile-stats d-flex justify-content-center">
+                            <div>
+                                <span class="heading">{{ object.simply_return }}</span>
+                                <span class="description">Simply Return</span>
+                            </div>
+                            <div>
+                                <span class="heading">{{ object.log_return }}</span>
+                                <span class="description">log_return</span>
+                            </div>
+                            <div>
+                                <span class="heading">{{ object.camp }}</span>
+                                <span class="description">CAMP</span>
+                            </div>
+                        </div>
+                         <div>
+                             <form class="form" method="post">
+                                 {% csrf_token %}
+                                 {{ form }}
+                                 <hr>
+                                 <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Save </button>
+                             </form>
+                         </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+            <div class="col-xl-8 order-xl-1">
+                <div class="card">
+                <div class="card-header">
+              <div class="row align-items-center">
+                <div class="col-8">
+                  <h3 class="mb-0"> </h3>
+                </div>
+                <div class="col-4 text-right">
+
+                </div>
+              </div>
+            </div>
+                <div class="card-body" style="display: block; height: 500px; overflow-y: scroll;">
+                    <table class="table table-bordered" >
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Value</th>
+                            <th>MA3</th>
+                            <th>MA10</th>
+                            <th>MA50</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for ele in chart_data %}
+                            <tr>
+                                <td>{{ ele.0 }}</td>
+                                <td>{{ ele.1|floatformat:2 }}</td>
+                                <td>{{ ele.2|floatformat:2 }}</td>
+                                <td>{{ ele.3|floatformat:2 }}</td>
+                                <td>{{ ele.4|floatformat:2 }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                </div>
+            </div>
+            <div class="card">
+            <div class="card-header">
+              <div class="row align-items-center">
+                <div class="col-8">
+                  <h3 class="mb-0">Ticker data past 50 days</h3>
+
+                </div>
+                <div class="col-4 text-right">
+                  <a href="#!" class="btn btn-sm btn-primary">Settings</a>
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+
+              {{ graph|safe }}
+            </div>
+          </div>
+            <div class="card">
+                <div class="card-header">Bollinger Bands</div>
+                <div class="card-body">
+                    <canvas id="myChart2"></canvas>
+                </div>
+
+            </div>
+
+            <div class="card-header">MACD</div>
+                <div class="card-body">
+                    <canvas id="myChart3"></canvas>
+                </div>
+
+            </div>
+            <div class="card">
+            <div class="card-header">
+              <div class="row align-items-center">
+                <div class="col-8">
+                  <h3 class="mb-0">Predict Area</h3>
+
+
+                </div>
+                <div class="col-4 text-right">
+                  <a id="graph_btn" href="{% url 'portfolio:ajax_show_graph' object.id %}" class="btn btn-sm btn-primary ">Predict</a>
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+                <div id="graph_area"></div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Footer -->
+
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+    <script>
+        $('#graph_btn').click(function (evt) {
+            evt.preventDefault();
+            const btn = $(this);
+            const url = btn.attr('href');
+            $.ajax({
+                method: 'GET',
+                dataType: 'json',
+                url: url,
+
+                beforeSend: function(data){
+                    $('#graph_area').html('<h4>Will take a while, Be patient</h4>')
+                },
+
+                success: function (data) {
+                    $('#graph_area').html(data.result)
+                }
+            })
+        })
+    </script>
+
+    <script>
+       const ctx_3 = document.getElementById('myChart3').getContext('2d');
+       const myChart3 = new Chart(ctx_3, {
+          type: 'line',
+          data: {
+            labels: [{%  for ele in tick %} {% if forloop.last %} "{{ ele.0 }}" {% else %} "{{ ele.0 }}",{% endif %} {% endfor %}],
+            datasets: [{
+                data: [{%  for ele in macd %} {% if forloop.last %} "{{ ele|floatformat:8 }}" {% else %} "{{ ele|floatformat:8}}",{% endif %} {% endfor %}],
+                label: "MACD",
+                borderColor: "#3e95cd",
+                backgroundColor: "#7bb6dd",
+                fill: false,
+              }, {
+                data: [{%  for ele in safe_line %} {% if forloop.last %} "{{ ele|floatformat:8 }}" {% else %} "{{ ele|floatformat:8 }}",{% endif %} {% endfor %}],
+                label: "Signal Line",
+                borderColor: "#3cba9f",
+                backgroundColor: "#71d1bd",
+                fill: false,
+              }, {
+                data: [{%  for ele in tick %} {% if forloop.last %} "{{ ele.1|floatformat:8 }}" {% else %}"{{ ele.1|floatformat:8 }}", {% endif %} {% endfor %}],
+                label: "Ticker",
+                borderColor: "#ffa500",
+                backgroundColor:"#ffc04d",
+                fill: false,
+              }
+            ]
+          },
+        });
+    </script>
+
+    <script>
+       const ctx_ = document.getElementById('myChart2').getContext('2d');
+       const myChart2 = new Chart(ctx_, {
+          type: 'line',
+          data: {
+            labels: [{%  for ele in df_sma %} {% if forloop.last %} "{{ ele.0 }}" {% else %} "{{ ele.0 }}",{% endif %} {% endfor %}],
+            datasets: [{
+                data: [{%  for ele in df_sma %} {% if forloop.last %} "{{ ele.1|floatformat:8 }}" {% else %} "{{ ele.1|floatformat:8}}",{% endif %} {% endfor %}],
+                label: "SMA",
+                borderColor: "#3e95cd",
+                backgroundColor: "#7bb6dd",
+                fill: false,
+              }, {
+                data: [{%  for ele in df_sma %} {% if forloop.last %} "{{ ele.2|floatformat:8 }}" {% else %} "{{ ele.2|floatformat:8 }}",{% endif %} {% endfor %}],
+                label: "Upper",
+                borderColor: "#3cba9f",
+                backgroundColor: "#71d1bd",
+                fill: false,
+              }, {
+                data: [{%  for ele in df_sma %} {% if forloop.last %} "{{ ele.3|floatformat:8 }}" {% else %}"{{ ele.3|floatformat:8 }}", {% endif %} {% endfor %}],
+                label: "Lower",
+                borderColor: "#ffa500",
+                backgroundColor:"#ffc04d",
+                fill: false,
+              }
+            ]
+          },
+        });
+    </script>
+
+    <script>
+       const ctx = document.getElementById('myChart').getContext('2d');
+       const myChart = new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: [{%  for ele in chart_data %} {% if forloop.last %} "{{ ele.0 }}" {% else %} "{{ ele.0 }}",{% endif %} {% endfor %}],
+            datasets: [{
+                data: [{%  for ele in chart_data %} {% if forloop.last %} "{{ ele.1|floatformat:8 }}" {% else %} "{{ ele.1|floatformat:8}}",{% endif %} {% endfor %}],
+                label: "Value",
+                borderColor: "#3e95cd",
+                backgroundColor: "#7bb6dd",
+                fill: false,
+              }, {
+                data: [{%  for ele in chart_data %} {% if forloop.last %} "{{ ele.2|floatformat:8 }}" {% else %} "{{ ele.2|floatformat:8 }}",{% endif %} {% endfor %}],
+                label: "MA10",
+                borderColor: "#3cba9f",
+                backgroundColor: "#71d1bd",
+                fill: false,
+              }, {
+                data: [{%  for ele in chart_data %} {% if forloop.last %} "{{ ele.3|floatformat:8 }}" {% else %}"{{ ele.3|floatformat:8 }}", {% endif %} {% endfor %}],
+                label: "MA50",
+                borderColor: "#ffa500",
+                backgroundColor:"#ffc04d",
+                fill: false,
+              }, {
+                data: [{%  for ele in chart_data %} {% if forloop.last %} "{{ ele.4|floatformat:8 }}" {% else %}  "{{ ele.4|floatformat:8 }}",{% endif %}{% endfor %}],
+                label: "MA3",
+                borderColor: "#c45850",
+                backgroundColor:"#d78f89",
+                fill: false,
+              }
+            ]
+          },
+        });
+    </script>
+
+    <script>
+        console.log('script is loaded');
+        const ticker = '{{ ticker.id }}';
+        const endpoint = 'ws://' + window.location.host + '/ws/ticker/' + ticker + '/';
+        console.log(endpoint);
+        const socket = new WebSocket(endpoint);
+
+        socket.onmessage  = function(event){
+            const data = JSON.parse(event.data);
+            const price = data.price;
+            console.log('return price', price);
+            $('#price').text(price)
+        };
+
+        $(window).on('load', function () {
+            socket.send(JSON.stringify({
+              'price': '33'
+            }))
+        })
+    </script>
+
+{% endblock %}

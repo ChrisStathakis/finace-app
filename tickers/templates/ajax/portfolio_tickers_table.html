@@ -1,0 +1,73 @@
+<h3>Tickers</h3>
+<div class="table-responsive">
+    <!-- Projects table -->
+    <table class="table align-items-center table-flush">
+        <thead class="thead-light">
+        <tr>
+            <th scope="col">Ticker</th>
+            <th scope="col">Invested - Units</th>
+            <th scope="col">Open</th>
+            <th scope="col">P/L</th>
+            <th scope="col">P/L(%)</th>
+            <th scope="col">Sell</th>
+            <th scope="col">Beta</th>
+            <th scope="col">Coverage</th>
+            <th scope="col">Camp</th>
+            <th>Expected Return </th>
+            <th>Standqard Dev </th>
+            <th>Value</th>
+            <th>Last Updated</th>
+            <th scope="col">-</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for ticker in instance.tickers.all %}
+            <tr>
+                <th scope="row">{{ ticker }}<br>
+                    {% if ticker.is_buy %} Buyed {{ ticker.date_buy|date:"d-m-Y" }}{% endif %}
+                </th>
+                <td>{{ ticker.starting_investment }}  | {{ ticker.qty }}</td>
+                <td>{{ ticker.starting_value_of_ticker }}</td>
+                <td>
+                    {% if ticker.diff_percent_ticker_price > 0 %}
+                        <span style="color: green">(+ {{ ticker.diff }})</span>
+                    {% else %}
+                        <span style="color: red">{{ ticker.diff }}</span>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if ticker.diff_percent_ticker_price > 0 %}
+                        <span style="color: green">(+ {{ ticker.diff_percent_ticker_price }})</span>
+                    {% else %}
+                        <span style="color: red">{{ ticker.diff_percent_ticker_price }}</span>
+                    {% endif %}
+                </td>
+                <td>{{ ticker.current_value_of_ticker }}</td>
+
+                <td>{{ ticker.ticker.beta }}</td>
+                <td>{{ ticker.ticker.coverage }}</td>
+                <td>{{ ticker.ticker.camp }}</td>
+                <td>{{ ticker.ticker.simply_return }} %</td>
+                <td>{{ ticker.ticker.standard_deviation }} %</td>
+
+                <td>{{ ticker.current_value }}</td>
+                <td>{{ ticker.updated|timesince }}</td>
+                {% if ticker.is_sell %}
+                    <td>Is Sell => {{ ticker.update }}</td>
+                {% else %}
+                    <td>
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                            {% if ticker.is_buy %}
+                                <a href="" class="btn btn-success">Sell </a>
+                            {% else %}
+                                <a href="{{ ticker.get_edit_url }}" class="btn btn-primary">Edit</a>
+                            {% endif %}
+                            <a href="{{ ticker.get_delete_url }}" class="btn btn-danger">Delete</a>
+                        </div>
+                    </td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>

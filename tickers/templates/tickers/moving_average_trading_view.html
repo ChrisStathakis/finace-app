@@ -1,0 +1,307 @@
+{% extends 'dashboard.html' %}
+
+{% block content %}
+
+ <!-- Header -->
+    <div class="header bg-primary pb-6">
+      <div class="container-fluid">
+        <div class="header-body">
+          <div class="row align-items-center py-4">
+            <div class="col-lg-6 col-7">
+              <h6 class="h2 text-white d-inline-block mb-0">Portfolios</h6>
+              <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                  <li class="breadcrumb-item"><a href="{% url 'homepage' %}"><i class="fas fa-home"></i></a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Portfolios</li>
+                </ol>
+              </nav>
+            </div>
+            <div class="col-lg-6 col-5 text-right">
+                <button type="button"  class="btn btn-info myModal"  data-toggle="modal" data-target="#myModal">
+                    Show Portfolios
+                </button>
+                <canvas id="myChart" width="400" height="400"></canvas>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <!-- Page content -->
+     <div class="container-fluid mt--6">
+        <div class="row">
+            <div id="result_container"></div>
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Strategy Details</h4>
+                        <!-- Button trigger modal -->
+
+                        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                            Analysis per day
+                        </button>
+                        <!-- Modal -->
+                        {% for key, values  in data.items %}
+                            <!-- Modal -->
+                            <div class="modal fade bd-example-modal-lg_{{ forloop.counter }}" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                              <div class="modal-dialog modal-lg" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">{{ key }}</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                            {% comment %}
+                            <p>Modal with id=myChart_{{ forloop.counter }}</p>
+                            <div class="modal fade bd-example-modal-lg_{{ forloop.counter }}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <h5 class="modal-title">{{ key }}</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                          <span aria-hidden="true">&times;</span>
+                                        </button>
+                                      </div>
+                                      <div class="modal-body">
+                                          <div>
+                                          <canvas id="myChart_{{ forloop.counter }}" height="200"></canvas>
+                                          </div>
+                                      </div>
+                                      <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                      </div>
+                                    </div>
+                                  </div>
+                            </div>]
+                            {% endcomment %}
+                        {% endfor %}
+
+                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <a class="close" data-dismiss="modal">×</a>
+                                        <h3>Portfolios</h3>
+                                    </div>
+                                    <div class="modal-body">
+                                       <table class="table">
+                                           <thead>
+                                            <tr>
+                                                <th>Portfolio</th>
+                                                <th> - </th>
+                                            </tr>
+                                           </thead>
+                                           <tbody>
+                                             {% for portfolio in portfolios %}
+                                                <tr>
+                                                    <td>{{ portfolio }}</td>
+                                                    <td> <a href="{% url 'add_portfolio_to_strategy' strategy.id portfolio.id %}" class="btn btn-info">Choose!</a> </td>
+                                                </tr>
+                                            {% endfor %}
+                                           </tbody>
+                                       </table>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <a href="#" class="btn">Close</a>
+                                        <a href="#" class="btn btn-primary">Save changes</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="card-body">
+                            <div class="collapse" id="collapseExample">
+                              <div class="card card-body">
+                                <table class="table table-bordered table-responsive">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        {% for ele in chart_headers %}
+                                            <th>{{ ele }}</th>
+                                        {% endfor %}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for ele in chart_data %}
+                                        {% if forloop.first %}
+
+                                        {% else %}
+                                        <tr>
+                                            {% for i in ele %}
+                                                <td>{{ i }}</td>
+                                                {% endfor %}
+                                        </tr>
+                                        {% endif %}
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                              </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            {% for key, value in data.items %}
+                <div class="col-6">
+                    <div class="card">
+                        <div class="card-header">{{ key }}</div>
+                        <div class="card-body">
+                             <canvas id="myChart_{{ forloop.counter }}"></canvas>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+
+         <div class="row">
+             <div class="col-6">
+                 <div class="card">
+                     <!-- Card header -->
+                     <div class="card-header border-0">
+                         <h3 class="mb-0">Add Ticker</h3>
+                     </div>
+                     <!-- Light table -->
+                     <div class="table-responsive">
+
+                         <table class="table align-items-center table-flush">
+                             <thead class="thead-light">
+                             <tr>
+                                 <th scope="col" class="sort" data-sort="name">Ticker</th>
+                                 <th> - </th>
+
+                             </tr>
+                             </thead>
+                             <tbody class="list">
+                             {% for ticker in object_list %}
+                             <tr>
+                                 <td class="budget">{{ ticker.title }}</td>
+                                 <td class="budget">
+                                     <a href="{% url 'add_to_strategy_ticker' strategy.id ticker.id %}" class="btn btn-success">
+                                         <i class="fas fa-plus"></i> </a>
+                                 </td>
+
+                             </tr>
+                             {% endfor %}
+
+                             </tbody>
+                         </table>
+                     </div>
+
+
+          </div>
+        </div>
+            <div class="col-6">
+                 <div class="card">
+                     <!-- Card header -->
+                     <div class="card-header border-0">
+                         <h3 class="mb-0">Your Tickers</h3>
+                     </div>
+                     <!-- Light table -->
+                     <div class="table-responsive">
+
+                         <table class="table align-items-center table-flush">
+                             <thead class="thead-light">
+                             <tr>
+                                 <th scope="col" class="sort" data-sort="name">Ticker</th>
+                                 <th> - </th>
+
+                             </tr>
+                             </thead>
+                             <tbody class="list">
+                             {% for ticker in strategy_tickers %}
+                             <tr>
+                                 <td class="budget">{{ ticker }}</td>
+                                 <td class="budget"> <a href="{% url 'remove_ticker_from_strategy' ticker.id %}" class="btn btn-danger">
+                                     <i class="fas fa-remove"></i> </a>
+                                 </td>
+
+                             </tr>
+                             {% endfor %}
+
+                             </tbody>
+                         </table>
+                     </div>
+
+          </div>
+        </div>
+
+      </div>
+      <!-- Dark table -->
+
+
+    </div>
+{% endblock %}
+
+{% block extra_cs %}
+<style>
+    canvas{
+        width:400px !important;
+        height:400px !important;
+
+}
+</style>
+{% endblock %}
+
+{% block extra_js %}
+    {% for key, value in data.items %}
+        <script>
+            console.log('myChart_{{ forloop.counter }}')
+            const ctx_{{ forloop.counter }} = document.getElementById('myChart_{{ forloop.counter }}');
+            ctx_{{ forloop.counter }}.height = 200;
+            const myChart_{{ forloop.counter }} =  new Chart(ctx_{{ forloop.counter }}, {
+                type: 'line',
+                data: {
+                    labels: [{% for ele in value %} {% if forloop.first %}{% for i in ele.0 %} {% if forloop.last %} '{{ i.0 }}' {% else %} '{{ i.0 }}', {% endif %}{% endfor %} {% endif %}{% endfor %}],
+                    datasets: [
+                        {% for ele in value %}
+                            {% if forloop.last %}
+                                {
+                                data: [{% for i in ele.0 %} {% if forloop.last %} '{{ i.1.1 }}' {% else %} '{{ i.1.1 }}', {% endif %}{% endfor %}],
+                                label: "Safe Line",
+                                borderColor: "#3e95cd",
+                                backgroundColor: "#7bb6dd",
+                                fill: false,
+                              }
+                            {% else %}
+                            {
+                                data: [{% for i in ele.0 %} {% if forloop.last %} '{{ i.1 }}' {% else %} '{{ i.1 }}', {% endif %}{% endfor %}],
+                                label: 'kk',
+                                borderColor: "#3e95cd",
+                                backgroundColor: "#7bb6dd",
+                                fill: false,
+                              },
+
+                            {% endif %}
+
+                        {% endfor %}
+
+                    ]
+
+                }
+
+            })
+        </script>
+    {% endfor %}
+
+
+
+
+{% endblock %}

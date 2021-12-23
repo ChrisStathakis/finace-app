@@ -1,0 +1,426 @@
+{% extends 'dashboard.html' %}
+
+
+{% block content %}
+
+    <!-- Header -->
+    <div class="header bg-primary pb-6">
+      <div class="container-fluid">
+        <div class="header-body">
+          <div class="row align-items-center py-4">
+            <div class="col-lg-6 col-7">
+              <h6 class="h2 text-white d-inline-block mb-0">{{ instance }}</h6>
+              <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                  <li class="breadcrumb-item"><a href="{% url 'homepage' %}"><i class="fas fa-home"></i></a></li>
+                  <li class="breadcrumb-item"><a href="{% url 'homepage' %}">PortFolios</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">{{ instance }}</li>
+                </ol>
+              </nav>
+                <a href="{% url 'portfolio:delete_portfolio' instance.id %}" onclick="return confirm('Are you sure?')" class="btn btn-danger"><i class="fa fa-remove"></i> Delete</a>
+            </div>
+            <div class="col-lg-6 col-5 text-right">
+               <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
+                    New Ticker
+               </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Ticker</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <h4>Create New Ticker</h4>
+                                <form method="post" class="form" action="{% url 'portfolio:validate_create_ticker' %}">
+                                    {% csrf_token %}
+                                    {{ ticker_form }}
+                                    <button class="btn btn-success" type="submit"><i class="fa fa-save"></i> Save </button>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade" id="portForm" tabindex="-1"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="portForm">Ticker</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <h4>Edit</h4>
+                                <form method="post" class="form">
+                                    {% csrf_token %}
+                                    {{ portForm }}
+                                    <button class="btn btn-success" type="submit"><i class="fa fa-save"></i> Save </button>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button  data-toggle="modal" data-target="#portForm" class="btn btn-sm btn-neutral">Edit</button>
+                <!-- Modal -->
+
+                <a href="{% url 'portfolio:refresh_portfolio_tickers' instance.id %}" class="btn btn-sm btn-neutral">Refresh Data</a>
+
+            </div>
+          </div>
+          <!-- Card stats -->
+          <div class="row" id="port_stats">
+              {% include 'ajax/port_stats.html' %}
+            {% comment %}
+            <div class="col-xl-3 col-md-6">
+              <div class="card card-stats">
+                <!-- Card body -->
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col">
+                      <h5 class="card-title text-uppercase text-muted mb-0">Sales</h5>
+                      <span class="h2 font-weight-bold mb-0">924</span>
+                    </div>
+                    <div class="col-auto">
+                      <div class="icon icon-shape bg-gradient-green text-white rounded-circle shadow">
+                        <i class="ni ni-money-coins"></i>
+                      </div>
+                    </div>
+                  </div>
+                  <p class="mt-3 mb-0 text-sm">
+                    <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
+                    <span class="text-nowrap">Since last month</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-3 col-md-6">
+              <div class="card card-stats">
+                <!-- Card body -->
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col">
+                      <h5 class="card-title text-uppercase text-muted mb-0">Remaining Capital</h5>
+                      <span class="h2 font-weight-bold mb-0">{{ instance.remaining_capital }}</span>
+                    </div>
+                    <div class="col-auto">
+                      <div class="icon icon-shape bg-gradient-info text-white rounded-circle shadow">
+                        <i class="ni ni-chart-bar-32"></i>
+                      </div>
+                    </div>
+                  </div>
+                  <p class="mt-3 mb-0 text-sm">
+                    <span class="text-success mr-2"> {{ instance.remaining_percent }}%</span>
+                    <span class="text-nowrap">{{ instance.maximum_cash }}</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+            {% endcomment %}
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Page content -->
+    <div class="container-fluid mt--6">
+        <div class="row">
+            <div class="col-12">
+
+            </div>
+        </div>
+
+      <div class="row">
+        <div class="col-xl-12">
+          <div class="card">
+            <div class="card-header border-0">
+              <div class="row align-items-center">
+                <div class="col">
+                    <a href="{% url 'portfolio:ajax_effective_frontier' instance.id %}" id="effective_frontier" class="btn btn-primary">Effective Frontier</a>
+                    <button data-href="{% url 'portfolio:create_random_port_tickers' instance.id %}" class="btn btn-info add_tickers">Add random Tickers</button>
+                    <hr>
+                </div>
+                <div class="col text-right">
+
+                </div>
+              </div>
+            </div>
+
+              <div id="frontier_area"></div>
+
+              <div class="collapse show" id="collapseExample">
+                <ul class="nav nav-pills">
+                    <li class="active"><button data-toggle="pill"  class="btn btn-primary" href="#home">Tickers</button></li>
+                    <li><a data-toggle="pill" href="#menu1" class="btn btn-info">Predict</a></li>
+                    <li><a data-toggle="pill" href="#menu2" class="btn btn-success">Add Ticker</a></li>
+                    <li><a data-toggle="pill" href="#menu3" class="btn btn-primary">Menu 3</a></li>
+                </ul>
+                  <div class="tab-content">
+                      <div id="home" class="tab-pane active show">
+                          {% include 'ajax/portfolio_tickers_table.html' %}
+                      </div>
+                      <div id="menu1" class="tab-pane fade">
+                          <h3>Predict</h3>
+                          <div class="row">
+                              {% for forecasting in forecast_data %}
+                                    <div class="col-6">
+                                        <h4 class="">Prediction of {{ forecasting.0 }}</h4>
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>Day</th>
+                                                    <th>Prediction</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for ele in forecasting.1 %}
+                                                    <tr>
+                                                        <td>{{ ele.0 }}</td>
+                                                        <td>{{ ele.1 }}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                              {% endfor %}
+                          </div>
+                      </div>
+                      <div id="menu2" class="tab-pane fade">
+                          <h3>Add Ticker</h3>
+                          <div class="row">
+                               <div class="col-xl-8">
+                                   <div class="card">
+                                       <div class="card-header border-0">
+                                           <div class="row align-items-center">
+                                               <div class="col">
+                                                   <h3 class="mb-0">Add Ticker</h3>
+                                               </div>
+                                               <div class="col text-right"></div>
+
+                                               <div class="table-responsive" id="table_data">
+                                                   <!-- Projects table -->
+                                                   {% include 'ajax/tickers_table.html' %}
+                                               </div>
+                                           </div>
+                                       </div>
+                                       <div class="col-xl-4">
+                                           <div class="card">
+                                               <div class="card-header border-0">
+                                                   <h4>Filters</h4>
+                                                   <hr>
+                                                   <form class="form">
+                                                       <h5>Beta</h5>
+                                                       <div class="form-check">
+                                                           <input name="beta" value="1.5>" class="form-check-input" type="checkbox"  id="flexCheckDefault1.5">
+                                                           <label class="form-check-label" for="flexCheckDefault1.5">
+                                                               1.5>
+                                                           </label>
+                                                       </div>
+                                                       <div class="form-check">
+                                                          <input name="beta" value="1-1.5" class="form-check-input" type="checkbox" id="flexCheckDefault1-1.5">
+                                                          <label class="form-check-label" for="flexCheckDefault1-1.5">
+                                                              1-1.5
+                                                          </label>
+                                                       </div>
+                                                      <div class="form-check">
+                                                          <input name="beta" value="0-1" class="form-check-input" type="checkbox"  id="flexCheckDefault0-1">
+                                                          <label class="form-check-label" for="flexCheckDefault0-1">
+                                                              0-1
+                                                          </label>
+                                                      </div>
+                                                      <div class="form-check">
+                                                          <input name="beta" value="0-0.1" class="form-check-input" type="checkbox"  id="flexCheckDefault0-0.1">
+                                                          <label class="form-check-label" for="flexCheckDefault0-0.1">
+                                                              0-0.1
+                                                          </label>
+                                                      </div>
+                                                      <div class="form-check">
+                                                          <input name="beta" value=">0.1" class="form-check-input" type="checkbox"  id="flexCheckDefault>0.1">
+                                                          <label class="form-check-label" for="flexCheckDefault>0.1">
+                                                              >0.1
+                                                          </label>
+                                                       </div>
+                                                       <br>
+                                                       <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> </button>
+                                                   </form>
+                                               </div>
+                                           </div>
+                                       </div>
+                                   </div>
+                               </div>
+                              <div id="menu3" class="tab-pane fade">
+                                  <h3>Menu 3</h3>
+                                  <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+            <div class="row">
+            <div class="col-3">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Generate random tickers</h4>
+                    </div>
+                    <div class="card-body">
+                        <form method="get" class="form">
+                            <div class="form-group">
+                                <label>Tickers</label>
+                                <input id='num_tickers' name="tickers" type="number" step="1" min="3" placeholder="3" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Iterations</label>
+                                <input id="iter" name="iter" type="number" step="1" min="3" placeholder="3" class="form-control" required>
+                            </div>
+                            <button data-href="{% url 'portfolio:create_random_port_tickers' instance.id %}" class="btn btn-info add_tickers">Add random Tickers</button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-9">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Result</h4>
+                    </div>
+                    <div class="card-body" id="add_tickers_area">
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+    <div id="modal_area"></div>
+  <!-- Argon Scripts -->
+{% endblock %}
+
+{% block extra_js %}
+    <script>
+        $('.search_').keypress(function(evt){
+            console.log('hitted!');
+            const myInput = $(this);
+            const data = myInput.val();
+            $.ajax({
+                method: 'GET',
+                dataType: 'json',
+                url: "{% url 'portfolio:ajax-search_tickers' instance.id %}" +  '?q='+data,
+                success: function (data) {
+                    $('#table_data').html(data.result)
+                }
+            })
+        })
+    </script>
+    <script>
+        $('#effective_frontier').click(function(evt){
+            evt.preventDefault();
+            $('#frontier_area').empty();
+            const btn = $(this);
+            const url = btn.attr('href');
+            $.ajax({
+                method: 'GET',
+                dataType: 'json',
+                url: url,
+
+                success: function (data) {
+                    $('#frontier_area').html(data.result);
+                }
+            })
+
+        });
+
+        $('.add_tickers').click(function (evt) {
+                console.log('starts');
+                evt.preventDefault();
+                const btn = $(this);
+                const iter = $('#iter').val();
+                const num = $('#num_tickers').val();
+
+                const url = btn.attr('data-href') + `?max=${num}&iter=${iter}`
+                $('#add_tickers_area').empty();
+                $.ajax({
+                    method: 'GET',
+                    dataType: 'json',
+                    url: url,
+                    beforeSend: function(){
+                        $('#add_tickers_area').html('<p>worth the wait </p>')
+                    },
+
+                    success: function (data) {
+                        $('#add_tickers_area').html(data.result)
+                    }
+                })
+        })
+    </script>
+
+    <script>
+        $('.add_ticker').click(function (evt) {
+            evt.preventDefault();
+            $('#modal_area').empty();
+            const myBtn = $(this);
+            const url = myBtn.attr('data-href');
+            $.ajax({
+                method: 'GET',
+                dataType: 'json',
+                url: url,
+
+                success: function (data) {
+                    $('#modal_area').html(data.result);
+                    $('#quick_view_modal').modal('show');
+                }
+            })
+        })
+    </script>
+
+    <script>
+    $('.show-modal-ticker').click(function (evt) {
+        console.log('hey!');
+        evt.preventDefault();
+        const btn = $(this);
+        const url = btn.attr('data-href');
+        $('.modal-ticker-area').empty();
+        $.ajax({
+            method: "GET",
+            dataType: 'json',
+            url: url,
+
+            success: function (data) {
+                $('.modal-ticker-area').html(data.result);
+                $('#tickerModal').modal('show');
+            }
+        })
+    });
+
+    function refreshData() {
+        $.ajax({
+            method: 'GET',
+            dataType: 'json',
+            url: "{% url 'portfolio:ajax_refresh_portfolio_ticker_data' instance.id %}",
+
+            success: function (data) {
+                $('#home').html(data.result);
+                $('#port_stats').html(data.port_stats)
+                setTimeout(function () {
+                    refreshData()
+                }, 15000)
+            }
+        })
+    }
+
+    window.onload = function(){
+        setTimeout(refreshData, 5000)
+    };
+
+    </script>
+
+
+
+
+{% endblock %}

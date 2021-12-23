@@ -1,0 +1,38 @@
+<table class="table align-items-center table-responsive">
+    <thead class="thead-light">
+    <tr>
+        <th>Portfolio</th>
+        <th scope="col">
+            Ticker | <span style="color: green">Return </span> |
+            <span style="color: red">Standard_deviation  </span> |
+            <span style="color: blue">Sharp </span> |
+            <span style="color: teal">Beta</span> |</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    {% for ticker in table_list %}
+        <tr>
+            <th>Portfolio
+                <hr>
+                Return<span style="color: green"> {{ ticker.1 }}</span>
+                <hr>
+                Variance <span style="color: red">{{ ticker.2 }}</span>
+                <hr>
+                Volatility <span style="color: teal">{{ ticker.3 }}</span>
+                <hr>
+                <a href="{% url 'portfolio:add_random_tickers_to_portfolio' instance.id %}?tickers={% for tic in ticker.0 %}{{ tic.id }}{% if forloop.last %}{% else %},{% endif %}{% endfor %}" class="btn btn-success">Add</a></th>
+            <th scope="row">{% for tic in ticker.0 %}
+                {{ tic }} |
+                <span style="color: green">{{ tic.simply_return }} </span> |
+                <span style="color: red">{{ tic.standard_deviation }} </span> |
+                <span style="color: blue">{{ tic.sharp }} </span> |
+                <span style="color: teal">{{ tic.beta }} </span> |
+                <hr>
+            {% endfor %}
+            </th>
+
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

@@ -1,0 +1,73 @@
+<table class="table align-items-center table-flush">
+    <thead class="thead-light">
+    <tr>
+        <th scope="col">Ticker</th>
+        <th scope="col">Beta</th>
+        <th scope="col">Market Variance</th>
+        <th scope="col">Coverage</th>
+        <th scope="col">Camp</th>
+        <th scope="col">Group</th>
+
+        <th scope="col">-</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    {% for ticker in tickers %}
+        <tr>
+            <th scope="row">{{ ticker }}</th>
+             <td>{{ ticker.beta }}</td>
+            <td>{{ ticker.market_variance }}</td>
+            <td>{{ ticker.coverage }}</td>
+            <td>{{ ticker.camp }}</td>
+            <td>{{ ticker.group }}</td>
+            <td>
+                <a data-href="{% url 'portfolio:ajax_show_ticker_modal' instance.id ticker.id %}"
+                    class="btn btn-info show-modal-ticker"
+                ><i class="fa fa-eye"></i> </a>
+                <a data-href="{% url 'portfolio:ajax_add_ticker_modal' instance.id ticker.id %}"
+                   class="btn btn-success add_ticker"><i class="fa fa-plus"></i> </a> </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<div class="modal-ticker-area"></div>
+
+<script>
+        $('.add_ticker').click(function (evt) {
+            evt.preventDefault();
+            $('#modal_area').empty();
+            const myBtn = $(this);
+            const url = myBtn.attr('data-href');
+            $.ajax({
+                method: 'GET',
+                dataType: 'json',
+                url: url,
+
+                success: function (data) {
+                    $('#modal_area').html(data.result);
+                    $('#quick_view_modal').modal('show');
+                }
+            })
+        })
+</script>
+
+<script>
+    $('.show-modal-ticker').click(function (evt) {
+        console.log('hey!');
+        evt.preventDefault();
+        const btn = $(this);
+        const url = btn.attr('data-href');
+        $('.modal-ticker-area').empty();
+        $.ajax({
+            method: "GET",
+            dataType: 'json',
+            url: url,
+
+            success: function (data) {
+                $('.modal-ticker-area').html(data.result);
+                $('#tickerModal').modal('show');
+            }
+        })
+    })
+</script>

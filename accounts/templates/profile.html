@@ -1,0 +1,171 @@
+{% extends 'dashboard.html' %}
+
+{% block content %}
+
+ <!-- Header -->
+    <div class="header bg-primary pb-6">
+      <div class="container-fluid">
+        <div class="header-body">
+          <div class="row align-items-center py-4">
+            <div class="col-lg-6 col-7">
+              <h6 class="h2 text-white d-inline-block mb-0">Tickers</h6>
+              <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                  <li class="breadcrumb-item"><a href="{% url 'homepage' %}"><i class="fas fa-home"></i></a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Tickers</li>
+                </ol>
+              </nav>
+            </div>
+            <div class="col-lg-6 col-5 text-right">
+                <a href="{% url 'portfolio:refresh_tickers_data' %}" class="btn btn-warning" >
+                    Refresh Data
+                </a>
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
+                    New Ticker
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Ticker</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <h4>Create New Ticker</h4>
+                                <form method="post" class="form" action="{% url 'portfolio:validate_create_ticker' %}">
+                                    {% csrf_token %}
+                                    {{ ticker_form }}
+                                    <button class="btn btn-success" type="submit"><i class="fa fa-save"></i> Save </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <!-- Page content -->
+     <div class="container-fluid mt--6">
+         <div class="row">
+             <div class="col-6">
+                 <div class="card">
+            <!-- Card header -->
+                     <div class="card-header border-0">
+                         <h3 class="mb-0">Portfolios</h3>
+                     </div>
+                     <!-- Light table -->
+                     <table class="table table-bordered">
+                         <thead class="thead-light">
+                         <tr>
+                             <th scope="col">#</th>
+                             <th scope="col">Title</th>
+                             <th scope="col">Started</th>
+                             <th scope="col">Current Money</th>
+                             <th scope="col">+/-</th>
+                             <th scope="col">Status</th>
+                         </tr>
+                         </thead>
+                         <tbody>
+                              {% for port in portfolios %}
+                                  <tr>
+                                      <th>{{ forloop.counter }}</th>
+                                      <td>{{ port }} </td>
+                                      <td>{{ port.date_investment }} </td>
+                                      <td>{{ port.current_value }} </td>
+                                      <td>{{ port.get_difference.0 }} </td>
+                                      <td><a href="{{ port.get_absolute_url }}" class="btn btn-success"><i class="fa fa-eye"></i> </a> </td>
+                                  </tr>
+                              {% endfor %}
+                              </tbody>
+                          </table>
+                     <!-- Card footer -->
+
+                 </div>
+             </div>
+             <div class="col-6">
+                 <div class="card">
+            <!-- Card header -->
+                     <div class="card-header border-0">
+                         <h3 class="mb-0">Groups</h3>
+
+
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModalgroup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Group</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <h4>Create New Group</h4>
+                                <form method="post" class="form" action="{% url 'portfolio:validate_create_group' %}">
+                                    {% csrf_token %}
+                                    {{ group_form }}
+                                    <button class="btn btn-success" type="submit"><i class="fa fa-save"></i> Save </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                     </div>
+                     <!-- Light table -->
+                     <div class="table-responsive">
+
+                         <table class="table align-items-center table-flush">
+                             <thead class="thead-light">
+                             <tr>
+                                 <th scope="col" class="sort" data-sort="name">Group</th>
+                                 <th scope="col" class="sort" data-sort="name">Code</th>
+
+                                 <th scope="col"></th>
+                             </tr>
+                             </thead>
+                             <tbody class="list">
+                             {% for group in groups %}
+                             <tr>
+                                 <td class="budget">{{ group.title }}</td>
+                                 <td class="budget">{{ group.code }}</td>
+                                 <td class="text-right">
+                      <div class="dropdown">
+                        <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <i class="fas fa-ellipsis-v"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                          <a class="dropdown-item" href="#">Edit</a>
+                          <a class="dropdown-item" href="#">Delete</a>
+
+                        </div>
+                      </div>
+                    </td>
+                             </tr>
+                             {% endfor %}
+
+                </tbody>
+              </table>
+
+            </div>
+            <!-- Card footer -->
+            <div class="card-footer py-4">
+              <button style="display: inline" type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalgroup">
+                    New Group
+                </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Dark table -->
+
+
+    </div>
+{% endblock %}

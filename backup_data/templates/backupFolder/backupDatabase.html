@@ -1,0 +1,213 @@
+{% extends 'dashboard.html' %}
+
+{% block content %}
+ <!-- Header -->
+    <div class="header bg-primary pb-6">
+      <div class="container-fluid">
+        <div class="header-body">
+          <div class="row align-items-center py-4">
+            <div class="col-lg-6 col-7">
+              <h6 class="h2 text-white d-inline-block mb-0">Tickers</h6>
+              <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                  <li class="breadcrumb-item"><a href="{% url 'homepage' %}"><i class="fas fa-home"></i></a></li>
+                  <li class="breadcrumb-item active" aria-current="page">BackUp Page</li>
+                </ol>
+              </nav>
+            </div>
+            <div class="col-lg-6 col-5 text-right">
+
+
+
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <!-- Page content -->
+     <div class="container-fluid mt--6">
+         <div class="row">
+             <div class="col-12">
+                 <div class="card">
+            <!-- Card header -->
+                     <div class="card-header border-0">
+                         <h3 class="mb-0">All Data</h3>
+                         <br />
+                         <hr />
+                         
+                         <hr />
+                     </div>
+                     <!-- Light table -->
+
+                     <!-- Card footer -->
+
+                 </div>
+             </div>
+             <div class="col-4">
+                 <div class="card">
+                     <!-- Card header -->
+                     <div class="card-header border-0">
+                         <h3 class="mb-0">Tickers</h3>
+                     </div>
+                     <!-- Light table -->
+                     <div class="table-responsive">
+                         <table class="table align-items-center table-flush">
+                             <thead class="thead-light">
+                                 <tr>
+                                     <th scope="col" class="sort" data-sort="name">Count</th>
+                                     <th scope="col" class="sort" data-sort="name">Last Download</th>
+                                 </tr>
+                             </thead>
+                             <tbody class="list">
+                                 <tr>
+                                     <td class="budget">{{ count_ticker }}</td>
+                                     <td class="budget">{{ last_ticker }}</td>
+
+                                 </tr>
+                             </tbody>
+                         </table>
+                     </div>
+                     <!-- Card footer -->
+                     <div class="card-footer py-4">
+                         <a href="{% url 'backup:download' 'ticker' %}" style="display: inline" type="button" class="btn btn-success" >
+                             Create Backup
+                         </a>
+                     </div>
+                 </div>
+             </div>
+             <div class="col-4">
+                 <div class="card">
+                     <!-- Card header -->
+                     <div class="card-header border-0">
+                         <h3 class="mb-0">User</h3>
+                     </div>
+                     <!-- Light table -->
+                     <div class="table-responsive">
+                         <table class="table align-items-center table-flush">
+                             <thead class="thead-light">
+                                 <tr>
+                                     <th scope="col" class="sort" data-sort="name">Count</th>
+                                     <th scope="col" class="sort" data-sort="name">Last Download</th>
+                                 </tr>
+                             </thead>
+                             <tbody class="list">
+                                 <tr>
+                                     <td class="budget">{{ count_user }}</td>
+                                     <td class="budget">{{ last_user }}</td>
+
+                                 </tr>
+                             </tbody>
+                         </table>
+                     </div>
+                     <!-- Card footer -->
+                     <div class="card-footer py-4">
+                         <a href="{% url 'backup:download' 'user' %}" style="display: inline" type="button" class="btn btn-success" >
+                             Create Backup
+                         </a>
+                     </div>
+                 </div>
+             </div>
+             <div class="col-4">
+                 <div class="card">
+                     <!-- Card header -->
+                     <div class="card-header border-0">
+                         <h3 class="mb-0">Portfolio</h3>
+                     </div>
+                     <!-- Light table -->
+                     <div class="table-responsive">
+                         <table class="table align-items-center table-flush">
+                             <thead class="thead-light">
+                                 <tr>
+                                     <th scope="col" class="sort" data-sort="name">Count</th>
+                                     <th scope="col" class="sort" data-sort="name">Last Download</th>
+                                 </tr>
+                             </thead>
+                             <tbody class="list">
+                                 <tr>
+                                     <td class="budget">{{ count_portfolio }}</td>
+                                     <td class="budget">{{ last_portfolio }}</td>
+
+                                 </tr>
+                             </tbody>
+                         </table>
+                     </div>
+                     <!-- Card footer -->
+                     <div class="card-footer py-4">
+                         <a href="{% url 'backup:download' 'portfolio' %}" style="display: inline" type="button" class="btn btn-success" >
+                             Create Backup
+                         </a>
+                     </div>
+                 </div>
+             </div>
+             <div class="col-4">
+                 <div class="card">
+                     <!-- Card header -->
+                     <div class="card-header border-0">
+                         <h3 class="mb-0">User Tickers</h3>
+                     </div>
+                     <!-- Light table -->
+                     <div class="table-responsive">
+                         <table class="table align-items-center table-flush">
+                             <thead class="thead-light">
+                                 <tr>
+                                     <th scope="col" class="sort" data-sort="name">Count</th>
+                                     <th scope="col" class="sort" data-sort="name">Last Download</th>
+                                 </tr>
+                             </thead>
+                             <tbody class="list">
+                                 <tr>
+                                     <td class="budget">{{ count_user_ticker }}</td>
+                                     <td class="budget">{{ last_user_ticker }}</td>
+
+                                 </tr>
+                             </tbody>
+                         </table>
+                     </div>
+                     <!-- Card footer -->
+                     <div class="card-footer py-4">
+                         <a href="{% url 'backup:download' 'user_ticker' %}" style="display: inline" type="button" class="btn btn-success" >
+                             Create Backup
+                         </a>
+                     </div>
+                 </div>
+             </div>
+             <div class="col-4">
+                 <div class="card">
+                     <!-- Card header -->
+                     <div class="card-header border-0">
+                         <h3 class="mb-0">Group</h3>
+                     </div>
+                     <!-- Light table -->
+                     <div class="table-responsive">
+                         <table class="table align-items-center table-flush">
+                             <thead class="thead-light">
+                                 <tr>
+                                     <th scope="col" class="sort" data-sort="name">Count</th>
+                                     <th scope="col" class="sort" data-sort="name">Last Download</th>
+                                 </tr>
+                             </thead>
+                             <tbody class="list">
+                                 <tr>
+                                     <td class="budget">{{ count_group }}</td>
+                                     <td class="budget">{{ last_group }}</td>
+
+                                 </tr>
+                             </tbody>
+                         </table>
+                     </div>
+                     <!-- Card footer -->
+                     <div class="card-footer py-4">
+                         <a href="{% url 'backup:download' 'group' %}" style="display: inline" type="button" class="btn btn-success" >
+                             Create Backup
+                         </a>
+                     </div>
+                 </div>
+             </div>
+      <!-- Dark table -->
+
+
+    </div>
+
+{% endblock %}

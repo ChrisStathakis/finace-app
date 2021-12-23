@@ -1,0 +1,112 @@
+{% extends 'dashboard.html' %}
+
+{% block content %}
+
+    <!-- Header -->
+    <div class="header bg-primary pb-6">
+      <div class="container-fluid">
+        <div class="header-body">
+          <div class="row align-items-center py-4">
+            <div class="col-lg-6 col-7">
+              <h6 class="h2 text-white d-inline-block mb-0">Settings</h6>
+              <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                  <li class="breadcrumb-item"><a href="{% url 'homepage' %}"><i class="fas fa-home"></i></a></li>
+                  <li class="breadcrumb-item"><a href="{% url 'homepage' %}">PortFolios</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">{{ instance }}</li>
+                </ol>
+              </nav>
+            </div>
+            <div class="col-lg-6 col-5 text-right">
+               <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
+                    New Date Range
+               </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Ticker</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <h4>Create New Ticker</h4>
+                                <form method="post" class="form" >
+                                    {% csrf_token %}
+                                    {{ date_range_form }}
+                                    <button class="btn btn-success" type="submit"><i class="fa fa-save"></i> Save </button>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade" id="portForm" tabindex="-1"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="portForm">Ticker</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <h4>Edit</h4>
+                                <form method="post" class="form">
+
+                                    <button class="btn btn-success" type="submit"><i class="fa fa-save"></i> Save </button>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button  data-toggle="modal" data-target="#portForm" class="btn btn-sm btn-neutral">Edit</button>
+                <!-- Modal -->
+
+            </div>
+          </div>
+          <!-- Card stats -->
+
+        </div>
+      </div>
+    </div>
+    <!-- Page content -->
+    <div class="container-fluid mt--6">
+        <div class="row">
+            <div class="col-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Date Ranges</h4>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Start</th>
+                                    <th>End</th>
+                                    <th>Is Primary</th>
+                                    <th>#</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for date in date_ranges %}
+                                    <tr>
+                                        <td>{{ date.id }}</td>
+                                        <td>{{ date.start }}</td>
+                                        <td>{{ date.get_end }}</td>
+                                        <td>{{ date.is_primary }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

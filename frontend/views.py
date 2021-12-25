@@ -27,7 +27,7 @@ def homepage(request):
         form.save()
     context['form'] = form
     context['count_portfolios'] = portfolios.count()
-    context['total_earnings'] = total_earnings = portfolios.aggregate(total=Sum(F('current_value')-F('starting_investment'))) if portfolios.exists() else 0
+    context['total_earnings'] = total_earnings = round(portfolios.aggregate(total=Sum(F('current_value')-F('starting_investment'))) if portfolios.exists() else 0,2)
     context['average_earnings'] = total_earnings['total']/portfolios.count() if portfolios.exists() else 0
     context['starting_investment'] = portfolios.aggregate(Sum('starting_investment'))['starting_investment__sum'] if portfolios.exists() else 0
     context['average_expected_earnings'] = portfolios.aggregate(Avg('expected_portfolio_return'))['expected_portfolio_return__avg'] if portfolios.exists() else 0

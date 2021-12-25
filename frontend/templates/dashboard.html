@@ -436,9 +436,9 @@
                             <th scope="row">{{ portfolio.title }}</th>
                             <td>{{ portfolio.tickers.count }}</td>
                             <td>{{ portfolio.expected_portfolio_return }}</td>
-                            <td>{{ portfolio.expected_portfolio_variance }}</td>
-                            <td>{{ portfolio.expected_portfolio_volatility }}</td>
-                            <td>{{ portfolio.earnings }}</td>
+                            <td>-</td>
+                            <td></td>
+                            <td></td>
                             <td><a href="{{ portfolio.get_absolute_url }}" class="btn btn-success"><i class="fa fa-edit"></i> </a></td>
                         </tr>
                     {% endfor %}

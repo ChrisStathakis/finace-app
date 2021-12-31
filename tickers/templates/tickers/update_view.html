@@ -3,11 +3,9 @@
 {% block extra_cs %}
 <style>
     canvas{
-
-  width:400px !important;
-  height:400px !important;
-
-}
+        width:400px !important;
+        height:400px !important;
+    }
 </style>
 {% endblock %}
 
@@ -28,7 +26,7 @@
     </div>
 
     <!-- Page content -->
-    <div class="container-fluid mt--6">
+    <div class="container-fluid">
         <div class="row">
             <div class="col-12">
                 <div class="card">
@@ -42,10 +40,10 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-xl-4 order-xl-2">
+            <div class="col-4">
                 <div class="card card-profile">
                     <div class="row justify-content-center">
-                        <div class="col-lg-3 order-lg-2">
+                        <div class="">
                             <div class="card-profile-image">
                                 <h4>Probability of drop 5% in next day {{ drop_5_prop|floatformat:3 }}</h4>
                                 <h4>Probability of gain 5% in next day {{ gain_5_prop|floatformat:3 }}</h4>
@@ -116,31 +114,31 @@
                 </div>
             </div>
           </div>
-        </div>
-            <div class="col-xl-8 order-xl-1">
-                <div class="card">
-                <div class="card-header">
-              <div class="row align-items-center">
-                <div class="col-8">
-                  <h3 class="mb-0"> </h3>
-                </div>
-                <div class="col-4 text-right">
-
-                </div>
-              </div>
             </div>
-                <div class="card-body" style="display: block; height: 500px; overflow-y: scroll;">
-                    <table class="table table-bordered" >
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Value</th>
-                            <th>MA3</th>
-                            <th>MA10</th>
-                            <th>MA50</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+            <div class="col-8">
+                 <div class="card">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col-8">
+                                <h3 class="mb-0"> </h3>
+                            </div>
+                            <div class="col-4 text-right">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body" style="display: block; height: 500px; overflow-y: scroll;">
+                        <table class="table table-bordered" >
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Value</th>
+                                    <th>MA3</th>
+                                    <th>MA10</th>
+                                    <th>MA50</th>
+                                </tr>
+                            </thead>
+                            <tbody>
                         {% for ele in chart_data %}
                             <tr>
                                 <td>{{ ele.0 }}</td>
@@ -154,7 +152,11 @@
                 </table>
                 </div>
             </div>
-            <div class="card">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <div class="card">
             <div class="card-header">
               <div class="row align-items-center">
                 <div class="col-8">
@@ -171,39 +173,48 @@
               {{ graph|safe }}
             </div>
           </div>
-            <div class="card">
-                <div class="card-header">Bollinger Bands</div>
-                <div class="card-body">
-                    <canvas id="myChart2"></canvas>
+            </div>
+            <div class="col-6">
+                <div class="card">
+                    <div class="card-header">Bollinger Bands</div>
+                    <div class="card-body">
+                        <canvas id="myChart2"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">MACD</div>
+                    <div class="card-body">
+                        <canvas id="myChart3"></canvas>
+                    </div>
                 </div>
 
             </div>
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col-8">
+                                <h3 class="mb-0">Predict Area</h3>
 
-            <div class="card-header">MACD</div>
-                <div class="card-body">
-                    <canvas id="myChart3"></canvas>
+                            </div>
+                            <div class="col-4 text-right">
+                                <a id="graph_btn" href="{% url 'portfolio:ajax_show_graph' object.id %}" class="btn btn-sm btn-primary ">Predict</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div id="graph_area"></div>
+
+                    </div>
                 </div>
-
             </div>
-            <div class="card">
-            <div class="card-header">
-              <div class="row align-items-center">
-                <div class="col-8">
-                  <h3 class="mb-0">Predict Area</h3>
-
-
-                </div>
-                <div class="col-4 text-right">
-                  <a id="graph_btn" href="{% url 'portfolio:ajax_show_graph' object.id %}" class="btn btn-sm btn-primary ">Predict</a>
-                </div>
-              </div>
-            </div>
-            <div class="card-body">
-                <div id="graph_area"></div>
-
-            </div>
-          </div>
         </div>
+
+        </div>
+
+
       </div>
       <!-- Footer -->
 

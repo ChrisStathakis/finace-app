@@ -17,7 +17,7 @@
       <excludeFolder url="file://$MODULE_DIR$/venv/Desktop/projects/env" />
       <excludeFolder url="file://$MODULE_DIR$/venv/finace" />
     </content>
-    <orderEntry type="jdk" jdkName="Python 3.7 (finace_app) (1)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Python 3.7 (finace_app)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
   <component name="TemplatesService">

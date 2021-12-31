@@ -57,8 +57,6 @@ six==1.15.0
 sqlparse==0.4.1
 tablib==3.0.0
 threadpoolctl==2.1.0
-Twisted==21.7.0
-twisted-iocpsupport==1.0.2
 txaio==21.2.1
 typing-extensions==3.7.4.3
 urllib3==1.26.4

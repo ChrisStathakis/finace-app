@@ -35,15 +35,17 @@ def get_stock_data(ticker, start='2010-1-1', end=datetime.today(), user=None):
 def read_data(ticker, start_date='2010-1-1', end_date=datetime.today(), re_download=True):
 
     if re_download:
+        print('download data', ticker)
         get_stock_data(ticker, start=start_date, end=end_date)
 
     if not os.path.exists(f'media/stock_dfs/{ticker}.csv'):
         try:
+            print('didnt find path', ticker)
             get_stock_data(ticker)
         except:
             return pd.DataFrame(columns=[])
     df = pd.read_csv(f'media/stock_dfs/{ticker}.csv', index_col='Date')
-    print('read layer', df)
+    print('df', ticker, df)
     if 'Stock Splits' in df.columns:
         df.drop(['Open', 'High', 'Low', 'Volume', 'Dividends', 'Stock Splits'], 1, inplace=True)
     else:

@@ -25,7 +25,8 @@ SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-PRODUCTION = True
+PRODUCTION = False
+REAL_DB = False
 
 ALLOWED_HOSTS = ['*', ] if PRODUCTION else ['*', ]
 
@@ -48,6 +49,7 @@ INSTALLED_APPS = [
     'settings',
     'strategies',
     'chat',
+    'chat_react',
     'backup_data',
 
     'import_export',
@@ -98,7 +100,7 @@ WSGI_APPLICATION = 'finace_app.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-if PRODUCTION:
+if REAL_DB:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',

@@ -51,12 +51,16 @@ class Ticker(models.Model):
     def __str__(self):
         return self.title
 
+    def save(self, *args, **kwargs):
+        self.update_ticker_data()
+        super(Ticker, self).save(*args, **kwargs)
+
     def get_absolute_url(self):
         return reverse('portfolio:ticker_update', kwargs={'pk': self.id})
 
     def calculate_averages(self):
         # returns rolling averages 3, 7 and 30 days
-        df = read_data(self.ticker)
+        df = read_data(self.ticker, re_download=False)
         df['three_days_avg'] = df[self.ticker].rolling(3).mean()
         df['seven_days_avg'] = df[self.ticker].rolling(7).mean()
         df['thirty_days_avg'] = df[self.ticker].rolling(30).mean()
@@ -64,7 +68,7 @@ class Ticker(models.Model):
 
     def create_data_for_chart(self):
         # returns rolling averages 3, 7 and 30 days
-        df = read_data(self.ticker)
+        df = read_data(self.ticker, re_download=False)
         df['MA3'] = df[self.ticker].rolling(3).mean()
         df['MA10'] = df[self.ticker].rolling(10).mean()
         df['MA50'] = df[self.ticker].rolling(50).mean()
@@ -96,7 +100,7 @@ class Ticker(models.Model):
 
     def sma(self, periods=12):
         # returns simply moving average (dataframe)
-        df = read_data(self.ticker)
+        df = read_data(self.ticker, re_download=False)
         sma = df.rolling(window=periods).mean()
         df['sma'] = df.rolling(window=periods).mean()
         df.dropna()
@@ -109,7 +113,7 @@ class Ticker(models.Model):
 
     def moving_average_trading_strategy(self, window=20, start_date='2020-01-01', end_date=datetime.now().date()):
         # returns pandas dataframe enchanced with shorting roll and ema (exponetial moving average)
-        df = read_data(self.ticker, start_date, end_date)
+        df = read_data(self.ticker, start_date, end_date, re_download=False)
         shorting_roll = f'shorting_roll_{self.ticker}'
         ema_short = f'ema_short_{self.ticker}'
         df[shorting_roll] = df[self.ticker].rolling(window=window).mean()
@@ -118,7 +122,7 @@ class Ticker(models.Model):
         return df
 
     def bb(self, sma_periods=12, periods=2):
-        df = read_data(self.ticker)
+        df = read_data(self.ticker, re_download=False)
         df['sma'] = df[self.ticker].rolling(sma_periods).mean()
         df['sma2'] = df[self.ticker].rolling(periods).mean()
 
@@ -130,7 +134,7 @@ class Ticker(models.Model):
         return df
 
     def calculate_macd(self):
-        df = read_data(self.ticker)
+        df = read_data(self.ticker, re_download=False)
         ticker = df[self.ticker]
         exp1 = ticker.ewm(span=12, adjust=False).mean()
         exp2 = ticker.ewm(span=26, adjust=False).mean()
@@ -145,7 +149,7 @@ class Ticker(models.Model):
 
     def calculate_probability_of_drop(self, percent=0.05):
         # you choose the percent a ticker will drop, and calculates the probabillity
-        ms = read_data(ticker=self.ticker)
+        ms = read_data(ticker=self.ticker, re_download=False)
         ms['LogReturn'] = np.log(ms[self.ticker]).shift(-1) - np.log(ms[self.ticker])
         mu = ms['LogReturn'].mean()
         sigma = ms['LogReturn'].std(ddof=1)
@@ -236,14 +240,15 @@ class Ticker(models.Model):
         for t in range(1, t_intervals):
             price_list[t] = price_list[t-1]*daily_returns[t]
 
-    def update_ticker_data(self, request=None):
+    def update_ticker_data(self, request=None, re_download=True):
         group = self.group.code if self.group else '^GSPC'
         tic = self.ticker
         tickers = [self.ticker, group]
         data = pd.DataFrame()
         for ticker in tickers:
-            df = read_data(ticker, re_download=True)
+            df = read_data(ticker, re_download=re_download)
             data = df if data.empty else data.join(df, how='outer')
+
         try:
             data['log_return'] = np.log(data[tic] / data[tic].shift(1))
         except:
@@ -277,8 +282,7 @@ class Ticker(models.Model):
         self.market_variance = round(float(market_var), 4) if isinstance(market_var, float) else 0
         self.standard_deviation = round(standard_deviation, 4) if isinstance(standard_deviation, float) else 0
         self.sharp = round(standard_deviation, 4) if isinstance(Sharpe, float) else 0
-        self.save()
-
+        self.updated = datetime.now()
         time.sleep(2)
 
 
@@ -302,6 +306,7 @@ class Portfolio(models.Model):
     def __str__(self):
         return self.title
 
+
     def save(self, *args, **kwargs):
         qs = self.tickers.all()
 
@@ -311,10 +316,13 @@ class Portfolio(models.Model):
         self.current_value = qs.aggregate(Sum('current_value'))[
             'current_value__sum'] if qs.exists() else 0
 
+        
         self.expected_portfolio_return, self.expected_portfolio_variance, self.expected_portfolio_volatility = \
             self.calculate_returns_and_volatility()
+      
 
         super(Portfolio, self).save(*args, **kwargs)
+
 
     def get_absolute_url(self):
         return reverse('portfolio:portofolio_detail', kwargs={'id':self.id})
@@ -400,7 +408,6 @@ class Portfolio(models.Model):
 
     def calculate_returns_and_volatility(self):
         try:
-            total_money = self.starting_investment
             assets, weights = [], []
             tickers = [ticker.ticker for ticker in self.tickers.all()]
             for tic in self.tickers.all():
@@ -419,8 +426,8 @@ class Portfolio(models.Model):
 
             log_returns = np.log(df_data / df_data.shift(1))
             mean = log_returns.mean()# *250
-            cov = log_returns.cov()
-            corr = log_returns.corr()
+            # cov = log_returns.cov()
+            # corr = log_returns.corr()
         except:
             print('worng')
 
@@ -431,11 +438,15 @@ class Portfolio(models.Model):
         '''
         try:
             expected_portofolio_return = Decimal(np.sum(weights * mean)) * 250
+            expected_portofolio_return = expected_portofolio_return if expected_portofolio_return else 0
             expected_portfolio_variance = np.dot(weights.T, np.dot(log_returns.cov() * 250, weights))
+            expected_portfolio_variance = expected_portfolio_variance if expected_portfolio_variance else 0
             expected_portfolio_volatility = np.sqrt(np.dot(weights.T, np.dot(log_returns.cov() * 250, weights)))
+            expected_portfolio_volatility = expected_portfolio_volatility if expected_portfolio_volatility else 0
+            print('expected', expected_portofolio_return, expected_portfolio_variance, expected_portfolio_volatility)
         except Exception as e:
 
-            return [0,0,0]
+            return [0, 0, 0]
 
         return [expected_portofolio_return, expected_portfolio_variance, expected_portfolio_volatility]
 
@@ -466,8 +477,8 @@ class UserTicker(models.Model):
     weight = models.DecimalField(max_digits=30, decimal_places=2, default=0)
 
     def save(self, *args, **kwargs):
-      
         self.qty = Decimal(self.starting_investment)/Decimal(self.starting_value_of_ticker) if self.starting_value_of_ticker != 0 else 0
+
         if self.starting_investment != 0:
             starting_value = Decimal(self.starting_investment)
             ticker_current_value = Decimal(self.current_value_of_ticker)
@@ -477,7 +488,6 @@ class UserTicker(models.Model):
             self.is_buy = True
 
         super().save(*args, **kwargs)
-        
 
     def __str__(self):
         return self.ticker.title if self.ticker else 'delete'
@@ -506,7 +516,7 @@ class UserTicker(models.Model):
         return 0
 
     def update_ticker_data(self):
-        print('here')
+
         data = pd.DataFrame()
         instance = self.ticker
         tic = instance.ticker
@@ -556,7 +566,6 @@ class UserTicker(models.Model):
         self.save()
 
     def tag_ticker(self):
-        print(self.ticker.title)
         return self.ticker.title if self.ticker else 'Something is wrong'
     
     def tag_code(self):
@@ -572,8 +581,6 @@ class UserTicker(models.Model):
         ticker = self.ticker
         ticker.update_ticker_data()
         
-
-
 
 class HistoricTicker(models.Model):
     ticker = models.OneToOneField(UserTicker, on_delete=models.CASCADE, related_name='historic_ticker')

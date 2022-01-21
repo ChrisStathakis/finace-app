@@ -4,10 +4,12 @@ from django.dispatch import receiver
 from .models import UserTicker, HistoricTicker, Ticker
 from datetime import datetime
 
+
 @receiver(post_save, sender=UserTicker)
 def save_profile(sender, instance, created,**kwargs, ):
-    instance.portfolio.save() if instance.portfolio else ''
+    # instance.portfolio.save() if instance.portfolio else ''
     ticker = instance.ticker
+
     '''
     if created:
         HistoricTicker.objects.create(
@@ -37,8 +39,3 @@ def save_profile(sender, instance, created,**kwargs, ):
     '''
 
 
-
-
-@receiver(post_save, sender=Ticker)
-def update_ticker(sender, instance, created, **kwargs):
-    pass

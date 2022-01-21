@@ -53,12 +53,11 @@ def refresh_ticker_data(request, pk):
 
 @login_required
 def update_ticker_api_view(request, pk, slug):
+    print('jherefdsf d')
     ticker = get_object_or_404(Ticker, id=pk)
-    if slug == 'yes':
-        get_stock_data(ticker.ticker)
-    ticker.update_ticker_data()
-    ticker.updated = timezone.now()
     ticker.save()
+
+    # moved the updated method to save method, so api viewa uodate too
     return redirect(ticker.get_absolute_url())
 
 

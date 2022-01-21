@@ -4,7 +4,6 @@ from .models import Portfolio, UserTicker, Ticker, Group
 from import_export.admin import ImportExportModelAdmin
 
 
-
 @admin.register(Portfolio)
 class PortoAdmin(admin.ModelAdmin):
     pass
@@ -12,7 +11,7 @@ class PortoAdmin(admin.ModelAdmin):
 
 @admin.register(UserTicker)
 class UserTickerAdmin(admin.ModelAdmin):
-    pass
+    list_display = ['ticker', 'id',]
 
 
 @admin.register(Ticker)

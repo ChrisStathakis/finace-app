@@ -69,7 +69,7 @@ class TickerUpdateView(UpdateView):
     def get_context_data(self, **kwargs):
         context = super(TickerUpdateView, self).get_context_data(**kwargs)
         file_exists = check_if_file_exists(self.object.ticker)
-        print('first step')
+
         if file_exists:
             print('file exists')
             context['macd'], context['safe_line'], context['tick'] = self.object.calculate_macd()
@@ -85,7 +85,6 @@ class TickerUpdateView(UpdateView):
                     continue
                 else:
                     new_list.append(ele)
-
             for ele in df_sma:
                 new_sma_list.append(ele) if self.object.ticker in ele else ''
 

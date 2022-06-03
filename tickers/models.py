@@ -306,7 +306,6 @@ class Portfolio(models.Model):
     def __str__(self):
         return self.title
 
-
     def save(self, *args, **kwargs):
         qs = self.tickers.all()
 

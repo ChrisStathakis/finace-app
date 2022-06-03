@@ -5,13 +5,13 @@ import os
 from datetime import datetime
 import datetime as dat
 
+
 def check_if_file_exists(ticker):
     return False if not os.path.exists(f'media/stock_dfs/{ticker}.csv') else True
         
 
 def get_stock_data(ticker, start='2010-1-1', end=datetime.today(), user=None):
     tickerData = yf.Ticker(ticker)
-    print(f'{ticker} data ==>', tickerData.info)
     if user:
         print('user check')
         settings = user.settings

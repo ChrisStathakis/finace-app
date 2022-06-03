@@ -2,29 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9ed3721e-8a39-4fa2-b200-192f6c9e361a" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/chat_react/consumers.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat_react/migrations/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat_react/routing.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat_react/templates/chat_react/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat_react/templates/chat_react/room.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat_react/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/finace_app/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/finace_app/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/stock_dfs/AMZN.csv" beforeDir="false" afterPath="$PROJECT_DIR$/media/stock_dfs/AMZN.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/stock_dfs/BTT1-EUR.csv" beforeDir="false" afterPath="$PROJECT_DIR$/media/stock_dfs/BTT1-EUR.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/stock_dfs/DOGE-EUR.csv" beforeDir="false" afterPath="$PROJECT_DIR$/media/stock_dfs/DOGE-EUR.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/stock_dfs/ETH-EUR.csv" beforeDir="false" afterPath="$PROJECT_DIR$/media/stock_dfs/ETH-EUR.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/stock_dfs/MATIC-GBP.csv" beforeDir="false" afterPath="$PROJECT_DIR$/media/stock_dfs/MATIC-GBP.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/stock_dfs/TSLA.csv" beforeDir="false" afterPath="$PROJECT_DIR$/media/stock_dfs/TSLA.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/stock_dfs/XLM.csv" beforeDir="false" afterPath="$PROJECT_DIR$/media/stock_dfs/XLM.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/stock_dfs/^GSPC.csv" beforeDir="false" afterPath="$PROJECT_DIR$/media/stock_dfs/^GSPC.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tickers/actions.py" beforeDir="false" afterPath="$PROJECT_DIR$/tickers/actions.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tickers/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/tickers/admin.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tickers/get_stock_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/tickers/get_stock_data.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tickers/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/tickers/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tickers/signals.py" beforeDir="false" afterPath="$PROJECT_DIR$/tickers/signals.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tickers/templates/tickers/update_view.html" beforeDir="false" afterPath="$PROJECT_DIR$/tickers/templates/tickers/update_view.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tickers/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/tickers/views.py" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/venv/Desktop/projects/env/" />
     <ignored path="$PROJECT_DIR$/venv/finace/" />
@@ -38,6 +20,9 @@
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/finace_app$coursera.coverage" NAME="coursera Coverage Results" MODIFIED="1620455941608" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/media" />
     <SUITE FILE_PATH="coverage/finace_app$moving_average.coverage" NAME="moving_average Coverage Results" MODIFIED="1627032638325" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/media" />
+  </component>
+  <component name="DarkyenusTimeTracker">
+    <option name="totalTimeSeconds" value="8" />
   </component>
   <component name="DjangoConsoleOptions" custom-start-script="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)">
     <option name="myCustomStartScript" value="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)" />
@@ -56,13 +41,76 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="routing.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="routing.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/chat_react/routing.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
+            <state relative-caret-position="68">
               <caret line="6" column="1" selection-start-line="6" selection-start-column="1" selection-end-line="6" selection-end-column="1" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="get_stock_data.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tickers/get_stock_data.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="136">
+              <caret line="13" column="34" selection-start-line="13" selection-start-column="34" selection-end-line="13" selection-end-column="34" />
+              <folding>
+                <element signature="e#0#21#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="settings.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/finace_app/settings.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="102">
+              <caret line="27" column="17" selection-start-line="27" selection-start-column="17" selection-end-line="27" selection-end-column="17" />
+              <folding>
+                <element signature="e#311#320#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tickers/views.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="51">
+              <caret line="16" column="33" selection-start-line="16" selection-start-column="33" selection-end-line="16" selection-end-column="33" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="update_view.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tickers/templates/tickers/update_view.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="714">
+              <caret line="42" column="31" selection-start-line="42" selection-start-column="31" selection-end-line="42" selection-end-column="31" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="consumers.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tickers/consumers.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="595">
+              <caret line="42" column="46" lean-forward="true" selection-start-line="42" selection-start-column="46" selection-end-line="42" selection-end-column="46" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tickers/models.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="4879">
+              <caret line="308" column="34" selection-start-line="308" selection-start-column="34" selection-end-line="308" selection-end-column="34" />
+              <folding>
+                <element signature="e#0#28#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -156,16 +204,16 @@
         <option value="$PROJECT_DIR$/tickers/views.py" />
         <option value="$PROJECT_DIR$/tickers/signals.py" />
         <option value="$PROJECT_DIR$/tickers/admin.py" />
-        <option value="$PROJECT_DIR$/tickers/get_stock_data.py" />
-        <option value="$PROJECT_DIR$/tickers/models.py" />
         <option value="$PROJECT_DIR$/chat_react/templates/chat_react/room.html" />
-        <option value="$PROJECT_DIR$/finace_app/settings.py" />
         <option value="$PROJECT_DIR$/chat_react/views.py" />
         <option value="$PROJECT_DIR$/chat_react/templates/urls.py" />
         <option value="$PROJECT_DIR$/chat_react/urls.py" />
         <option value="$PROJECT_DIR$/chat_react/templates/chat_react/index.html" />
         <option value="$PROJECT_DIR$/chat_react/consumers.py" />
         <option value="$PROJECT_DIR$/chat_react/routing.py" />
+        <option value="$PROJECT_DIR$/tickers/models.py" />
+        <option value="$PROJECT_DIR$/tickers/get_stock_data.py" />
+        <option value="$PROJECT_DIR$/finace_app/settings.py" />
       </list>
     </option>
   </component>
@@ -178,7 +226,7 @@
   <component name="NodePackageJsonFileManager">
     <packageJsonPaths />
   </component>
-  <component name="ProjectFrameBounds">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
     <option name="width" value="976" />
@@ -193,6 +241,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -203,19 +252,12 @@
             <path>
               <item name="finace-app" type="b2602c69:ProjectViewProjectNode" />
               <item name="finace-app" type="462c0819:PsiDirectoryNode" />
-              <item name="chat_react" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="finace-app" type="b2602c69:ProjectViewProjectNode" />
-              <item name="finace-app" type="462c0819:PsiDirectoryNode" />
-              <item name="chat_react" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
+              <item name="finace_app" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="ProjectViewState">
@@ -225,7 +267,7 @@
   <component name="PropertiesComponent">
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../tutorials/whiteboard" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
@@ -380,7 +422,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="976" height="1056" extended-state="0" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -390,16 +432,16 @@
       <window_info anchor="bottom" id="Python Console" order="12" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.32943678" />
       <window_info anchor="bottom" id="Terminal" order="11" weight="0.36025506" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.171875" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.171875" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="3" />
       <window_info anchor="right" id="SciView" order="4" weight="0.3296875" />
+      <window_info anchor="bottom" id="manage.py@finace_app" order="13" visible="true" weight="0.25079703" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3994528" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info active="true" anchor="bottom" id="manage.py@finace_app" order="13" visible="true" weight="0.25079703" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -656,13 +698,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tickers/templates/tickers/update_view.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-45">
-          <caret line="42" column="31" lean-forward="true" selection-start-line="42" selection-start-column="31" selection-end-line="42" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/tickers/actions.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="549">
@@ -697,34 +732,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tickers/get_stock_data.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="278">
-          <caret line="38" column="62" lean-forward="true" selection-start-line="38" selection-start-column="62" selection-end-line="38" selection-end-column="62" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/frontend/views.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
           <caret line="37" column="30" selection-start-line="37" selection-start-column="30" selection-end-line="37" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tickers/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="16" column="28" selection-start-line="16" selection-start-column="28" selection-end-line="16" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tickers/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2352">
-          <caret line="429" column="14" selection-start-line="429" selection-start-column="14" selection-end-line="429" selection-end-column="14" />
-          <folding>
-            <element signature="e#0#28#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -742,16 +753,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/finace_app/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="51" column="17" selection-start-line="51" selection-start-column="17" selection-end-line="51" selection-end-column="17" />
-          <folding>
-            <element signature="e#311#320#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/chat_react/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
@@ -763,13 +764,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
           <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tickers/consumers.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="511">
-          <caret line="62" column="14" selection-start-line="62" selection-start-column="14" selection-end-line="62" selection-end-column="14" />
         </state>
       </provider>
     </entry>
@@ -785,10 +779,61 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/chat_react/routing.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
+        <state relative-caret-position="68">
           <caret line="6" column="1" selection-start-line="6" selection-start-column="1" selection-end-line="6" selection-end-column="1" />
           <folding>
             <element signature="e#0#31#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tickers/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4879">
+          <caret line="308" column="34" selection-start-line="308" selection-start-column="34" selection-end-line="308" selection-end-column="34" />
+          <folding>
+            <element signature="e#0#28#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tickers/get_stock_data.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="13" column="34" selection-start-line="13" selection-start-column="34" selection-end-line="13" selection-end-column="34" />
+          <folding>
+            <element signature="e#0#21#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tickers/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="16" column="33" selection-start-line="16" selection-start-column="33" selection-end-line="16" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tickers/templates/tickers/update_view.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="714">
+          <caret line="42" column="31" selection-start-line="42" selection-start-column="31" selection-end-line="42" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tickers/consumers.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="595">
+          <caret line="42" column="46" lean-forward="true" selection-start-line="42" selection-start-column="46" selection-end-line="42" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/finace_app/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="27" column="17" selection-start-line="27" selection-start-column="17" selection-end-line="27" selection-end-column="17" />
+          <folding>
+            <element signature="e#311#320#0" expanded="true" />
           </folding>
         </state>
       </provider>

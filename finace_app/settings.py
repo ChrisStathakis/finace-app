@@ -25,8 +25,8 @@ SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-PRODUCTION = False
-REAL_DB = False
+PRODUCTION = True
+REAL_DB = True
 
 ALLOWED_HOSTS = ['*', ] if PRODUCTION else ['*', ]
 
